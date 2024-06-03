@@ -68,16 +68,13 @@ Run this Project Locally
 
 Clone this repository.
 Navigate to the project directory:
-sh
-Copy code
+
 cd project-folder
 Install dependencies:
-sh
-Copy code
+
 npm install
 Run on localhost:3000:
-sh
-Copy code
+
 npm run start
 
 
