@@ -2,6 +2,10 @@ Project Description
 
 The Meet app is a progressive web application featuring a serverless backend, allowing offline access to upcoming events in selected cities. Its responsive design guarantees a consistent display on various devices, enhancing the user experience. Built with Test-Driven Development, it emphasizes code quality and comprehensive test coverage for optimal functionality.
 
+This app will use serverless functions
+
+Serverless functions are employed in the Meet app to handle backend operations without the need for managing server infrastructure. For example, when users request information about upcoming events or filter events by city, serverless functions process these requests by retrieving and returning data from the database. This serverless architecture ensures scalability, cost-effectiveness, and efficient resource use, providing seamless access to event information regardless of the user's location or network connectivity.
+
 User Stories
 
 As a user, I want to filter events by city so that I can view a list of events occurring in that city.
