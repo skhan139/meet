@@ -20,7 +20,7 @@ class Alert extends Component {
       fontSize: "12px",
       margin: "10px 0",
       padding: "10px"
-    }
+    };
   }
 
   render() {
@@ -35,25 +35,31 @@ class Alert extends Component {
 class InfoAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = 'rgb(0, 0, 255)';
-    this.bgColor = 'rgb(220, 220, 255)';
+    this.color = "rgb(0, 0, 255)"; // blue
+    this.bgColor = "rgb(220, 220, 255)"; // light blue
   }
 }
+//
+//error alert
 
 class ErrorAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = 'rgb(255, 0, 0)';
-    this.bgColor = 'rgb(255 204 203)';
+    this.color = "rgb(255, 0, 0)";
+    this.bgColor = "rgb(255, 220, 220)";
   }
 }
+//
+//warning alert
 
 class WarningAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = 'rgb(255, 211, 0)';
-    this.bgColor = 'rgb(255, 255, 191)';
+    this.color = "rgb(200, 200, 0)";
+    this.bgColor = "rgb(255, 255, 220)";
   }
 }
 
+//
+//exports
 export { InfoAlert, ErrorAlert, WarningAlert };
