@@ -4,7 +4,7 @@ import { useState } from "react";
 const  Event = ({event}) => {
    const [showDetails, setShowDetails] = useState(false);
     return (
-        <li className="event" key={event.id} >
+        <li className="event">
             <h2>{event.summary}</h2>
             <p>{event.created}</p>
             <p>{event.location}</p>
@@ -15,7 +15,7 @@ const  Event = ({event}) => {
             {showDetails ? (
                         <div className="details">
                         <h3>Event Details</h3>
-                        <p>{event.description}</p>
+                        <p>{event.details}</p>
                         </div>) : null}
         </li>
     )

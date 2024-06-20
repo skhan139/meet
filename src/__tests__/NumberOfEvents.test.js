@@ -1,35 +1,27 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+import { render } from '@testing-library/react';
+import { getEvents } from '../api';
+import NumberOfEvents from '../components/NumberOfEvents';
+import userEvent from '@testing-library/user-event';
 
-const MESSAGES_TO_IGNORE = [
-    "When testing, code that causes React state updates should be wrapped into act(...):",
-    "Error:",
-    "The above error occurred"
-  ];
-  
-  const originalError = console.error.bind(console.error);
-  
-  console.error = (...args) => {
-    const ignoreMessage = MESSAGES_TO_IGNORE.find(message => args.toString().includes(message));
-    if (!ignoreMessage) originalError(...args);
-  }
+describe('<NumberOfEvents /> component', () => {
+    let NumberOfEventsComponent;
+    beforeEach(() => {
+        NumberOfEventsComponent = render(<NumberOfEvents/>);
+    })
+  test('has an element with "textbox" role', () => {
+    expect(NumberOfEventsComponent.queryByRole("textbox")).toBeInTheDocument();
+  });
 
-  const { ResizeObserver } = window;
+  test('default value is 32', () => {
+    expect(NumberOfEventsComponent.queryByRole('textbox')).toHaveValue('32');
+  });
 
-beforeEach(() => {
-  //@ts-ignore
-  delete window.ResizeObserver;
-  window.ResizeObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  }));
-});
+  test('update numberOfEvents when user types', async() => {
+    const numberOfEvents = NumberOfEventsComponent.queryByRole('textbox');
+    const user = userEvent.setup();
+    await user.type(numberOfEvents, '{backspace}{backspace}10');
+    expect(numberOfEvents).toHaveValue('10');
+  })
 
-afterEach(() => {
-  window.ResizeObserver = ResizeObserver;
-  jest.restoreAllMocks();
-});
+
+}); 

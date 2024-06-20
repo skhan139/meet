@@ -8,20 +8,13 @@ describe('<CitySearch /> component', () => {
     let CitySearchComponent;
 
     beforeEach(() => {
-      const setInfoAlert = jest.fn();
-
-        CitySearchComponent = render(<CitySearch 
-          allLocations={[]}
-          setCurrentCity={() => { }}
-           setInfoAlert={setInfoAlert}
-        />);
+        CitySearchComponent = render(<CitySearch allLocations={[]}/>);
     })
 
   test('suggestion list is hidden default', () => {
     const suggestionList = CitySearchComponent.queryByRole('list');
-    expect(suggestionList).toBeFalsy();
-  });
-
+    expect(suggestionList).not.toBeInTheDocument();
+  });  
   test('renders a suggestionList when city box is clicked', async() => {
     const user = userEvent.setup();
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
@@ -30,7 +23,7 @@ describe('<CitySearch /> component', () => {
     const suggestionList = CitySearchComponent.queryByRole('list');
     expect(suggestionList).toBeInTheDocument();
     expect(suggestionList).toHaveClass('suggestion');
-  });
+  })
   test('renders text input', () => {
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     expect(cityTextBox).toBeInTheDocument();
@@ -42,8 +35,7 @@ describe('<CitySearch /> component', () => {
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
 
-    CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} 
-    setInfoAlert={() => { }}/>);
+    CitySearchComponent.rerender(<CitySearch allLocations={allLocations}/>);
     // User types 'Berlin' in textbox
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.type(cityTextBox, 'Berlin');
@@ -68,11 +60,7 @@ describe('<CitySearch /> component', () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-    const setInfoAlert = jest.fn();
-    CitySearchComponent.rerender(<CitySearch  
-      allLocations={allLocations}
-      setCurrentCity={() => { }} 
-      setInfoAlert={setInfoAlert}/>);
+    CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }}/>);
 
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.type(cityTextBox, 'Berlin');
@@ -83,29 +71,27 @@ describe('<CitySearch /> component', () => {
     await user.click(Berlinsuggestion);
 
     expect(cityTextBox).toHaveValue(Berlinsuggestion.textContent);
-    expect(setInfoAlert).toHaveBeenCalledWith('');
+
 
   });
 
 });
 
-
 describe('<CitySearch/>, integration', () => {
 
-  test('renders suggestions list when the app is rendered.', async () => {
-    const user = userEvent.setup();
-    const AppComponent = render(<App />);
-    const AppDOM = AppComponent.container.firstChild;
+    test('renders suggestionList when app is rendered and user focus in textbox', async() => {
+      const user = userEvent.setup();
+      const appComponent = render(<App />);
+      const appDom = appComponent.container.firstChild;
 
-    const CitySearchDOM = AppDOM.querySelector('#city-search');
-    const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
-    await user.click(cityTextBox);
+      const citySearchDom = appDom.querySelector('#city-search');
+      const textbox = within(citySearchDom).queryByRole('textbox');
+      await user.click(textbox);
+      
+      const allEvents = await getEvents();
+      const allLocations = extractLocations(allEvents);
 
-    const allEvents = await getEvents();
-    const allLocations = extractLocations(allEvents);
-
-    const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
-    expect(suggestionListItems.length).toBe(allLocations.length + 1);
-    
- });
+      const suggestionList = within(citySearchDom).queryAllByRole('listitem');
+      expect(suggestionList.length).toBe(allLocations.length + 1);
+    });
 })
