@@ -48,3 +48,4 @@ const CitySearch = ({allLocations, setCurrentCity}) => {
     )
 }
 
+export default CitySearch;

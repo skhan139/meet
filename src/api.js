@@ -85,3 +85,4 @@ export const getEvents = async () => {
     access_token && localStorage.setItem("access_token", access_token);
 
     return access_token;
+  };
