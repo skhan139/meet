@@ -27,7 +27,7 @@ describe('<EventList />, integration', () => {
       const eventListDom = appDom.querySelector('#event-list');
       await waitFor(() => {
         const eventListItems = within(eventListDom).queryAllByRole('listitem');
-        expect(eventListItems.length).toBeGreaterThan(0);
+        expect(eventListItems.length).toBe(32);
       })
 
 
