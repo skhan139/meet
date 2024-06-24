@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 import mockData from '../mock-data';
 import Event from '../components/Event';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils'; // Make sure to import act from react
 
 describe('<Event /> component', () => {
   let EventComponent;
@@ -27,7 +26,7 @@ describe('<Event /> component', () => {
   });
 
   test('has button show details', () => {
-    expect(EventComponent.queryByText('Show Details')).toBeInTheDocument();
+    expect(EventComponent.queryByText('show details')).toBeInTheDocument();
   });
 
   test('by default, events details section should be hidden', () => {
@@ -37,7 +36,7 @@ describe('<Event /> component', () => {
 
   test('shows details section, when user clicks show details button', async () => {
     const user = userEvent.setup();
-    const button = EventComponent.queryByText('Show Details');
+    const button = EventComponent.queryByText('show details');
     await user.click(button);
     const details = EventComponent.container.querySelector('.details');
     expect(details).toBeInTheDocument();
@@ -45,7 +44,7 @@ describe('<Event /> component', () => {
 
   test('hide details section, when user clicks hide details button', async () => {
     const user = userEvent.setup();
-    const showButton = EventComponent.queryByText('Show Details');
+    const showButton = EventComponent.queryByText('show details');
     
     // First click to show details
     await user.click(showButton);
@@ -53,7 +52,7 @@ describe('<Event /> component', () => {
     expect(details).toBeInTheDocument();
     
     // Click to hide details
-    const hideButton = EventComponent.queryByText('Hide Details');
+    const hideButton = EventComponent.queryByText('hide details');
     await user.click(hideButton);
     expect(details).not.toBeInTheDocument();
   });
